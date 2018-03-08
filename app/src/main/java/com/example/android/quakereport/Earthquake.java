@@ -5,27 +5,27 @@ package com.example.android.quakereport;
  * Project: udacity_QuakeReport
  * © Copyright by myousef
  */
-public class Earthquake {
+class Earthquake {
 
     private String mMagnitude;
     private String mLocation;
-    private String mDate;
+    private long mTimeInMilliSeconds;
 
-    public Earthquake(String mMagnitude, String mLocation, String mDate) {
+    Earthquake(String mMagnitude, String location, long timeInMilliSeconds) {
         this.mMagnitude = mMagnitude;
-        this.mLocation = mLocation;
-        this.mDate = mDate;
+        this.mLocation = location;
+        this.mTimeInMilliSeconds = timeInMilliSeconds;
     }
 
-    public String getmMagnitude() {
+    String getMagnitude() {
         return mMagnitude;
     }
 
-    public String getmLocation() {
+    String getLocation() {
         return mLocation;
     }
 
-    public String getmDate() {
-        return mDate;
+    long getTimeInMilliSeconds() {
+        return mTimeInMilliSeconds;
     }
 }
