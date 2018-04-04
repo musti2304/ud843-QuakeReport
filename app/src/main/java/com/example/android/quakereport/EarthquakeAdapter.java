@@ -1,14 +1,17 @@
 package com.example.android.quakereport;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -36,12 +39,19 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         Earthquake currentEarthquake = getItem(position);
 
+        TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
+        String magnitudeAsFormattedDecimal = formatMagnitude(currentEarthquake.getMagnitude());
+        magnitudeView.setText(magnitudeAsFormattedDecimal);
+
+        GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeView.getBackground();
+        int magnitudeColor = getMagnitudeColor(currentEarthquake.getMagnitude());
+
+        // TODO: Fix crash
+        magnitudeCircle.setColor(magnitudeColor);
+
         String originalLocation = currentEarthquake.getLocation();
         String primaryLocation;
         String locationOffset;
-
-        TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
-        magnitudeView.setText(currentEarthquake.getMagnitude());
 
         if (originalLocation.contains(LOCATION_SEPARATOR)) {
             String locations[] = originalLocation.split(LOCATION_SEPARATOR);
@@ -69,6 +79,52 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         timeView.setText(formattedTime);
 
         return listItemView;
+    }
+
+    private int getMagnitudeColor(double magnitude) {
+        int magnitudeColorResourceId;
+        int magnitudeFloor = (int) magnitude;
+        switch (magnitudeFloor) {
+            case 0:
+                magnitudeColorResourceId = R.color.magnitude1;
+                break;
+            case 1:
+                magnitudeColorResourceId = R.color.magnitude1;
+                break;
+            case 2:
+                magnitudeColorResourceId = R.color.magnitude2;
+                break;
+            case 3:
+                magnitudeColorResourceId = R.color.magnitude3;
+                break;
+            case 4:
+                magnitudeColorResourceId = R.color.magnitude4;
+                break;
+            case 5:
+                magnitudeColorResourceId = R.color.magnitude5;
+                break;
+            case 6:
+                magnitudeColorResourceId = R.color.magnitude6;
+                break;
+            case 7:
+                magnitudeColorResourceId = R.color.magnitude7;
+                break;
+            case 8:
+                magnitudeColorResourceId = R.color.magnitude8;
+                break;
+            case 9:
+                magnitudeColorResourceId = R.color.magnitude9;
+                break;
+            default:
+                magnitudeColorResourceId = R.color.magnitude10plus;
+                break;
+        }
+        return ContextCompat.getColor(getContext(), magnitudeColorResourceId);
+    }
+
+    private String formatMagnitude(double magnitude) {
+        DecimalFormat magnitudeAsDecimal = new DecimalFormat("0.0");
+        return magnitudeAsDecimal.format(magnitude);
     }
 
     private String formatDate(Date date) {

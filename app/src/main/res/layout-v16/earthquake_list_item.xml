@@ -23,7 +23,6 @@
         android:id="@+id/locationOffset"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_weight="2"
         tools:text="24KM SW of "
         />
@@ -39,7 +38,6 @@
         android:id="@+id/date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
         android:layout_weight="1"
         tools:text="March 5, 2018"/>
 
