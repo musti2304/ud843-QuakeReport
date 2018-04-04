@@ -78,15 +78,6 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         String formattedTime = formatTime(date);
         timeView.setText(formattedTime);
 
-        listItemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Uri url = Uri.parse(currentEarthquake.getUrl());
-                Intent openUrl = new Intent(Intent.ACTION_VIEW, url);
-                getContext().startActivity(openUrl);
-            }
-        });
-
         return listItemView;
     }
 
