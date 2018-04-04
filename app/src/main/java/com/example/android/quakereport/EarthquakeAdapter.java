@@ -1,7 +1,9 @@
 package com.example.android.quakereport;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -37,7 +39,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.earthquake_list_item, parent, false);
         }
 
-        Earthquake currentEarthquake = getItem(position);
+        final Earthquake currentEarthquake = getItem(position);
 
         TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
         String magnitudeAsFormattedDecimal = formatMagnitude(currentEarthquake.getMagnitude());
@@ -45,8 +47,6 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeView.getBackground();
         int magnitudeColor = getMagnitudeColor(currentEarthquake.getMagnitude());
-
-        // TODO: Fix crash
         magnitudeCircle.setColor(magnitudeColor);
 
         String originalLocation = currentEarthquake.getLocation();
@@ -77,6 +77,15 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         TextView timeView = (TextView) listItemView.findViewById(R.id.time);
         String formattedTime = formatTime(date);
         timeView.setText(formattedTime);
+
+        listItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri url = Uri.parse(currentEarthquake.getUrl());
+                Intent openUrl = new Intent(Intent.ACTION_VIEW, url);
+                getContext().startActivity(openUrl);
+            }
+        });
 
         return listItemView;
     }
